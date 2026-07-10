@@ -75,14 +75,14 @@ export default function Navbar() {
           ) : (
             <>
               <Link
-                href="/login"
+                href="/auth/login"
                 className="rounded-lg border border-indigo-600 px-4 py-2 text-indigo-600 transition hover:bg-indigo-50"
               >
                 Login
               </Link>
 
               <Link
-                href="/register"
+                href="/auth/register"
                 className="rounded-lg bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-700"
               >
                 Register
