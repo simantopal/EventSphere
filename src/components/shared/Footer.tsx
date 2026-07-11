@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-300">
       <div className="mx-auto max-w-7xl px-6 py-14">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 text-center md:text-left">
           {/* Brand */}
           <div>
             <Link href="/" className="text-3xl font-bold text-indigo-500">
@@ -98,22 +98,22 @@ export default function Footer() {
             </h3>
 
             <div className="space-y-4 text-sm">
-              <div className="flex items-start gap-3">
+              <div className="flex items-center justify-center md:justify-start gap-3">
                 <MapPin size={18} />
                 <p>Dhaka, Bangladesh</p>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center md:justify-start gap-3">
                 <Phone size={18} />
                 <p>+880 1234-567890</p>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center md:justify-start gap-3">
                 <Mail size={18} />
                 <p>support@eventsphere.com</p>
               </div>
 
-              <div className="mt-5 flex gap-4">
+              <div className="mt-5 flex justify-center md:justify-start gap-4">
                 <Link
                   href="https://facebook.com"
                   target="_blank"

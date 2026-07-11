@@ -60,7 +60,7 @@ const Testimonials = () => {
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="rounded-2xl border border-base-300 bg-base-200 p-6 shadow-sm hover:shadow-lg transition-all duration-300"
+              className="rounded-2xl border border-base-300 bg-background p-6 shadow-sm hover:shadow-lg transition-all duration-300"
             >
               {/* Stars */}
               <div className="flex mb-4">

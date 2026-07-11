@@ -62,7 +62,7 @@ export default function Categories() {
           {categories.map((category) => (
             <div
               key={category.id}
-              className="rounded-2xl border border-gray-200 p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              className="rounded-2xl bg-background border border-gray-200 p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
             >
               <div className="text-5xl mb-5">{category.icon}</div>
 

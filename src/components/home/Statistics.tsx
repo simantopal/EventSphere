@@ -79,9 +79,9 @@ export default function Statistics() {
             return (
               <div
                 key={item.id}
-                className="rounded-2xl border border-base-300 bg-base-200 p-6 text-center hover:shadow-lg transition"
+                className="rounded-2xl border border-base-300 bg-background p-6 text-center hover:shadow-lg transition"
               >
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <div className="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4">
                   <Icon className="text-primary" size={28} />
                 </div>
 

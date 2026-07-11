@@ -39,14 +39,14 @@ export default function FAQ() {
   };
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20">
       <div className="max-w-4xl mx-auto px-4">
         {/* Section Heading */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900">
+          <h2 className="text-4xl font-bold">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-gray-600">
+          <p className="mt-4">
             Find answers to the most common questions about EventSphere.
           </p>
         </div>
@@ -56,13 +56,13 @@ export default function FAQ() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="border border-gray-200 rounded-xl bg-white shadow-sm"
+              className="border border-gray-200 bg-background rounded-xl shadow-sm"
             >
               <button
                 onClick={() => toggleFAQ(index)}
                 className="w-full flex items-center justify-between px-6 py-5 text-left"
               >
-                <span className="font-semibold text-lg text-gray-800">
+                <span className="font-semibold text-lg">
                   {faq.question}
                 </span>
 
@@ -80,7 +80,7 @@ export default function FAQ() {
                     : "max-h-0 px-6"
                 }`}
               >
-                <p className="text-gray-600 leading-7">{faq.answer}</p>
+                <p className="text-gray-300 leading-7">{faq.answer}</p>
               </div>
             </div>
           ))}

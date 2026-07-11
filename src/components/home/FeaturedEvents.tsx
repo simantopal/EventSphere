@@ -73,9 +73,9 @@ const FeaturedEvents = () => {
           {featuredEvents.map((event) => (
             <div
               key={event.id}
-              className="bg-white rounded-2xl border overflow-hidden shadow-sm hover:shadow-lg transition duration-300 flex flex-col"
+              className="bg-background rounded-2xl border overflow-hidden shadow-sm hover:shadow-lg transition duration-300 flex flex-col"
             >
-              <div className="relative h-56">
+              <div className="relative h-48">
                 <Image
                   src={event.image}
                   alt={event.title}
