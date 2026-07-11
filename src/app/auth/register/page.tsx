@@ -1,45 +1,99 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { signIn, signUp } from "@/lib/auth-client";
 
 export default function RegisterPage() {
+    const router = useRouter();
+
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+    ) => {
         e.preventDefault();
-        const form = e.currentTarget;
 
+        const form = e.currentTarget;
         const formData = new FormData(form);
 
         const name = formData.get("name") as string;
         const email = formData.get("email") as string;
         const password = formData.get("password") as string;
-        const confirmPassword = formData.get("confirmPassword") as string;
+        const confirmPassword = formData.get(
+            "confirmPassword"
+        ) as string;
 
-        console.log({
-            name,
-            email,
-            password,
-            confirmPassword,
-        });
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters.");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const { error } = await signUp.email({
+                name,
+                email,
+                password,
+            });
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            alert("Registration successful!");
+
+            router.push("/");
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong!");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            await signIn.social({
+                provider: "google",
+                callbackURL: "/",
+            });
+        } catch (err) {
+            console.error(err);
+            alert("Google login failed!");
+        }
     };
 
     return (
         <section className="min-h-screen flex items-center justify-center bg-slate-100 px-4 py-5">
             <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
+
                 <div className="mb-5 text-center">
-                    <Link href="/" className="text-3xl font-bold text-blue-600">
+                    <Link
+                        href="/"
+                        className="text-3xl font-bold text-blue-600"
+                    >
                         EventSphere
                     </Link>
 
-                    <h1 className="mt- text-2xl font-bold">
+                    <h1 className="mt-2 text-2xl font-bold">
                         Create Your Account
                     </h1>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-2">
-                    {/* Name */}
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                >
                     <div>
                         <label className="mb-2 block font-medium">
                             Full Name
@@ -54,7 +108,6 @@ export default function RegisterPage() {
                         />
                     </div>
 
-                    {/* Email */}
                     <div>
                         <label className="mb-2 block font-medium">
                             Email
@@ -69,7 +122,6 @@ export default function RegisterPage() {
                         />
                     </div>
 
-                    {/* Password */}
                     <div>
                         <label className="mb-2 block font-medium">
                             Password
@@ -77,7 +129,11 @@ export default function RegisterPage() {
 
                         <div className="relative">
                             <input
-                                type={showPassword ? "text" : "password"}
+                                type={
+                                    showPassword
+                                        ? "text"
+                                        : "password"
+                                }
                                 name="password"
                                 placeholder="Enter password"
                                 required
@@ -86,15 +142,20 @@ export default function RegisterPage() {
 
                             <button
                                 type="button"
-                                onClick={() => setShowPassword(!showPassword)}
+                                onClick={() =>
+                                    setShowPassword(
+                                        !showPassword
+                                    )
+                                }
                                 className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-blue-600"
                             >
-                                {showPassword ? "Hide" : "Show"}
+                                {showPassword
+                                    ? "Hide"
+                                    : "Show"}
                             </button>
                         </div>
                     </div>
 
-                    {/* Confirm Password */}
                     <div>
                         <label className="mb-2 block font-medium">
                             Confirm Password
@@ -103,32 +164,25 @@ export default function RegisterPage() {
                         <input
                             type="password"
                             name="confirmPassword"
-                            placeholder="Confirm password"
+                            placeholder="Confirm Password"
                             required
                             className="w-full rounded-lg border px-4 py-3 outline-none focus:border-blue-600"
                         />
                     </div>
 
-                    {/* Terms */}
-                    <div className="flex items-center gap-2">
-                        <input type="checkbox" required />
-
-                        <p className="text-sm text-gray-600">
-                            I agree to the Terms & Conditions.
-                        </p>
-                    </div>
-
-                    {/* Register Button */}
                     <button
                         type="submit"
-                        className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
+                        disabled={loading}
+                        className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-60"
                     >
-                        Create Account
+                        {loading
+                            ? "Creating Account..."
+                            : "Create Account"}
                     </button>
 
-                    {/* Google Button */}
                     <button
                         type="button"
+                        onClick={handleGoogleLogin}
                         className="w-full rounded-lg border py-3 font-medium hover:bg-gray-100"
                     >
                         Continue with Google
@@ -141,9 +195,10 @@ export default function RegisterPage() {
                         href="/auth/login"
                         className="font-semibold text-blue-600 hover:underline"
                     >
-                        LogIn
+                        Login
                     </Link>
                 </p>
+
             </div>
         </section>
     );

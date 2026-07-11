@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link href="/" className="text-3xl font-bold text-white">
+            <Link href="/" className="text-3xl font-bold text-indigo-500">
               EventSphere
             </Link>
 
