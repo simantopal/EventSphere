@@ -5,13 +5,18 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import { signOut, useSession } from "@/lib/auth-client";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   // Change to your auth state later
-  const isLoggedIn = false;
+  const { data: session, isPending } = useSession();
+  if (isPending) {
+    return null;
+  }
+  const isLoggedIn = !!session;
 
   const publicLinks = [
     { name: "Home", href: "/" },
@@ -48,11 +53,10 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`transition ${
-                pathname === link.href
-                  ? "font-semibold text-indigo-600"
-                  : "hover:text-indigo-600"
-              }`}
+              className={`transition ${pathname === link.href
+                ? "font-semibold text-indigo-600"
+                : "hover:text-indigo-600"
+                }`}
             >
               {link.name}
             </Link>
@@ -65,12 +69,17 @@ export default function Navbar() {
           {isLoggedIn ? (
             <>
               <img
-                src="https://i.pravatar.cc/40"
+                src={session?.user.image || "https://i.pravatar.cc/40"}
                 alt="User"
                 className="h-10 w-10 rounded-full"
               />
 
-              <button className="rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600">
+              <button
+                onClick={async () => {
+                  await signOut();
+                }}
+                className="rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
+              >
                 Logout
               </button>
             </>
@@ -110,11 +119,10 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className={`block ${
-                pathname === link.href
-                  ? "font-semibold text-indigo-600"
-                  : "hover:text-indigo-600"
-              }`}
+              className={`block ${pathname === link.href
+                ? "font-semibold text-indigo-600"
+                : "hover:text-indigo-600"
+                }`}
             >
               {link.name}
             </Link>
@@ -123,7 +131,13 @@ export default function Navbar() {
           <hr />
 
           {isLoggedIn ? (
-            <button className="w-full rounded-lg bg-red-500 py-2 text-white">
+            <button
+              onClick={async () => {
+                await signOut();
+                setIsOpen(false);
+              }}
+              className="w-full rounded-lg bg-red-500 py-2 text-white"
+            >
               Logout
             </button>
           ) : (

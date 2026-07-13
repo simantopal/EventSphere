@@ -1,10 +1,74 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { signIn } from "@/lib/auth-client";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    setLoading(true);
+
+    try {
+      const { error } = await signIn.email({
+        email,
+        password,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      router.push("/");
+      router.refresh();
+    } catch (err) {
+      console.error(err);
+      alert("Login failed!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setLoading(true);
+
+    try {
+      const { error } = await signIn.email({
+        email: "demo@gmail.com",
+        password: "123456",
+        callbackURL: "/",
+      });
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      router.push("/");
+      router.refresh();
+    } catch (err) {
+      console.error(err);
+      alert("Demo login failed!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
@@ -13,13 +77,14 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold text-slate-900">
             Welcome Back
           </h1>
+
           <p className="mt-2 text-slate-600">
-            Sign in to continue to <span className="font-semibold">EventSphere</span>.
+            Sign in to continue to{" "}
+            <span className="font-semibold">EventSphere</span>.
           </p>
         </div>
 
-        <form className="space-y-5">
-          {/* Email */}
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="mb-2 block text-sm font-medium text-slate-700">
               Email
@@ -27,12 +92,13 @@ export default function LoginPage() {
 
             <input
               type="email"
+              name="email"
               placeholder="Enter your email"
+              required
               className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-indigo-600"
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="mb-2 block text-sm font-medium text-slate-700">
               Password
@@ -41,7 +107,9 @@ export default function LoginPage() {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
                 placeholder="Enter your password"
+                required
                 className="w-full rounded-lg border border-slate-300 px-4 py-3 pr-16 outline-none transition focus:border-indigo-600"
               />
 
@@ -55,15 +123,10 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center gap-2">
-              <input type="checkbox" />
-              Remember me
-            </label>
-
+          <div className="text-right">
             <Link
               href="/forgot-password"
-              className="text-indigo-600 hover:underline"
+              className="text-sm text-indigo-600 hover:underline"
             >
               Forgot Password?
             </Link>
@@ -71,14 +134,17 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-indigo-600 py-3 font-semibold text-white transition hover:bg-indigo-700"
+            disabled={loading}
+            className="w-full rounded-lg bg-indigo-600 py-3 font-semibold text-white transition hover:bg-indigo-700 disabled:opacity-60"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           <button
             type="button"
-            className="w-full rounded-lg border border-indigo-600 py-3 font-semibold text-indigo-600 transition hover:bg-indigo-50"
+            onClick={handleDemoLogin}
+            disabled={loading}
+            className="w-full rounded-lg border border-indigo-600 py-3 font-semibold text-indigo-600 transition hover:bg-indigo-50 disabled:opacity-60"
           >
             Demo Login
           </button>
