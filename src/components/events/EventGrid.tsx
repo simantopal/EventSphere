@@ -9,7 +9,7 @@ export interface Event {
   location: string;
   date: string;
   price: number;
-  rating: number;
+  rating?: number;
 }
 
 interface EventGridProps {

@@ -1,82 +1,90 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import EventCard from "../events/EventCard";
 
-const featuredEvents = [
-  {
-    _id: "1",
-    title: "Tech Innovators Summit 2026",
-    shortDescription:
-      "Explore the latest innovations in AI, web development, and cloud technologies.",
-    image:
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800",
-    date: "August 18, 2026",
-    location: "Dhaka",
-    price: 49,
-    rating: 4.8,
-  },
-  {
-    _id: "2",
-    title: "Creative Design Workshop",
-    shortDescription:
-      "Learn UI/UX design principles from industry-leading designers.",
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
-    date: "September 05, 2026",
-    location: "Chattogram",
-    price: 35,
-    rating: 4.7,
-  },
-  {
-    _id: "3",
-    title: "Startup Networking Night",
-    shortDescription:
-      "Meet founders, investors, and entrepreneurs to grow your network.",
-    image:
-      "https://images.unsplash.com/photo-1515169067868-5387ec356754?w=800",
-    date: "October 12, 2026",
-    location: "Sylhet",
-    price: 0,
-    rating: 4.9,
-  },
-  {
-    _id: "4",
-    title: "Digital Marketing Bootcamp",
-    shortDescription:
-      "Master SEO, social media marketing, and branding strategies.",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
-    date: "November 02, 2026",
-    location: "Khulna",
-    price: 29,
-    rating: 4.6,
-  },
-];
+interface Event {
+  _id: string;
+  title: string;
+  shortDescription: string;
+  image: string;
+  category: string;
+  location: string;
+  date: string;
+  price: number;
+  rating?: number;
+}
 
 const FeaturedEvents = () => {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeaturedEvents = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/events`
+        );
+
+        const data = await res.json();
+
+        if (data.success) {
+          // Show only latest 8 events
+          setEvents(data.data.slice(0, 8));
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedEvents();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16">
+        <div className="mx-auto max-w-7xl px-4 text-center">
+          <p>Loading events...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="mx-auto max-w-7xl px-4">
         {/* Heading */}
-        <div className="text-center mb-10">
-          <p className="text-primary font-semibold uppercase tracking-wider">
+        <div className="mb-10 text-center">
+          <p className="font-semibold uppercase tracking-wider text-primary">
             Featured Events
           </p>
 
-          <h2 className="text-4xl font-bold mt-2">
+          <h2 className="mt-2 text-4xl font-bold">
             Discover Upcoming Experiences
           </h2>
 
-          <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-            Explore handpicked events designed to inspire learning, networking,
-            creativity, and unforgettable experiences.
+          <p className="mx-auto mt-4 max-w-2xl text-gray-500">
+            Explore handpicked events designed to inspire learning,
+            networking, creativity, and unforgettable experiences.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredEvents.map((event) => (
-            <EventCard key={event._id} event={event} />
-          ))}
-        </div>
+        {/* Events */}
+        {events.length > 0 ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {events.map((event) => (
+              <EventCard key={event._id} event={event} />
+            ))}
+          </div>
+        ) : (
+          <div className="py-10 text-center">
+            <h3 className="text-xl font-semibold">
+              No Events Available
+            </h3>
+          </div>
+        )}
       </div>
     </section>
   );

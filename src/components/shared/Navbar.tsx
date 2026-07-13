@@ -20,13 +20,13 @@ export default function Navbar() {
 
   const publicLinks = [
     { name: "Home", href: "/" },
-    { name: "Explore", href: "/events" },
+    { name: "Explore", href: "/explore-events" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
   const privateLinks = [
-    { name: "Add Event", href: "/events/add" },
+    { name: "Add Event", href: "/events/add-events" },
     { name: "Manage Events", href: "/events/manage" },
     { name: "My Bookings", href: "/my-bookings" },
     { name: "Profile", href: "/profile" },

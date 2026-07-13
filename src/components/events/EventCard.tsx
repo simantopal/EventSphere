@@ -10,7 +10,8 @@ export interface Event {
   date: string;
   location: string;
   price: number;
-  rating: number;
+  totalSeats: number;
+  rating?: number;
 }
 
 interface EventCardProps {
@@ -26,6 +27,7 @@ const EventCard = ({ event }: EventCardProps) => {
     date,
     location,
     price,
+    totalSeats,
     rating,
   } = event;
 
@@ -55,9 +57,14 @@ const EventCard = ({ event }: EventCardProps) => {
             <span>{date}</span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <MapPin size={16} />
-            <span>{location}</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MapPin size={16} />
+              <span>{location}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span>totalSeats: {totalSeats}</span>
+            </div>
           </div>
 
           <div className="flex items-center justify-between">
@@ -80,7 +87,7 @@ const EventCard = ({ event }: EventCardProps) => {
 
         <div className="mt-auto pt-5">
           <Link
-            href={`/events/${_id}`}
+            href={`/explore-events/${_id}`}
             className="block rounded-lg bg-indigo-600 py-3 text-center font-medium text-white transition hover:bg-indigo-700"
           >
             View Details
