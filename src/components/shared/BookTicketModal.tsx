@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface Props {
     event: {
@@ -14,9 +15,20 @@ interface Props {
 const BookTicketModal = ({ event }: Props) => {
     const [open, setOpen] = useState(false);
 
+    const router = useRouter();
+
     const { data: session } = useSession();
 
     const user = session?.user;
+
+    const handleOpen = () => {
+        if (!user) {
+            router.push(`/auth/login?redirect=/events/${event._id}`);
+            return;
+        }
+
+        setOpen(true);
+    };
 
     const handleBooking = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -52,13 +64,14 @@ const BookTicketModal = ({ event }: Props) => {
         if (data.success) {
             alert("Ticket booked successfully");
             setOpen(false);
+            form.reset();
         }
     };
 
     return (
         <>
             <button
-                onClick={() => setOpen(true)}
+                onClick={handleOpen}
                 className="mt-8 w-fit rounded-lg bg-indigo-600 px-8 py-3 text-white"
             >
                 Book Ticket
@@ -73,7 +86,6 @@ const BookTicketModal = ({ event }: Props) => {
                         Book {event.title}
                     </h2>
 
-                    {/* Auto filled user info */}
                     <input
                         value={user?.name || ""}
                         readOnly
@@ -89,6 +101,7 @@ const BookTicketModal = ({ event }: Props) => {
                     <input
                         name="tickets"
                         type="number"
+                        min={1}
                         placeholder="Number of Tickets"
                         className="mt-4 w-full rounded border p-3"
                         required

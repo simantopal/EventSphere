@@ -12,6 +12,7 @@ interface Event {
   location: string;
   date: string;
   price: number;
+  totalSeats: number;
   rating?: number;
 }
 

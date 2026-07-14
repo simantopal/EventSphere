@@ -29,7 +29,7 @@ export default function Navbar() {
     { name: "Add Event", href: "/events/add-events" },
     { name: "Manage Events", href: "/events/manage" },
     { name: "My Bookings", href: "/my-bookings" },
-    { name: "Profile", href: "/profile" },
+    // { name: "Profile", href: "/profile" },
   ];
 
   const links = isLoggedIn

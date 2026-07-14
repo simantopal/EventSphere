@@ -149,17 +149,10 @@ const ManageEventsPage = () => {
 
                                     <div className="flex gap-2 pt-2">
                                         <Link
-                                            href={`/events/${event._id}`}
+                                            href={`/explore-events/${event._id}`}
                                             className="flex-1 rounded-lg bg-blue-600 py-2 text-center text-sm font-medium text-white transition hover:bg-blue-700"
                                         >
                                             View
-                                        </Link>
-
-                                        <Link
-                                            href={`/events/update/${event._id}`}
-                                            className="flex-1 rounded-lg bg-amber-500 py-2 text-center text-sm font-medium text-white transition hover:bg-amber-600"
-                                        >
-                                            Update
                                         </Link>
 
                                         <button

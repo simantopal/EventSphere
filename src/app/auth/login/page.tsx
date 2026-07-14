@@ -50,8 +50,8 @@ export default function LoginPage() {
 
     try {
       const { error } = await signIn.email({
-        email: "demo@gmail.com",
-        password: "123456",
+        email: "user@123.com",
+        password: "user@123",
         callbackURL: "/",
       });
 
@@ -71,14 +71,14 @@ export default function LoginPage() {
   };
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section className="flex min-h-screen items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-background p-8 shadow-lg">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-slate-900">
+          <h1 className="text-3xl font-bold">
             Welcome Back
           </h1>
 
-          <p className="mt-2 text-slate-600">
+          <p className="mt-2 text-slate-400">
             Sign in to continue to{" "}
             <span className="font-semibold">EventSphere</span>.
           </p>
@@ -86,7 +86,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium">
               Email
             </label>
 
@@ -100,7 +100,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium">
               Password
             </label>
 

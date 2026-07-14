@@ -74,8 +74,8 @@ export default function RegisterPage() {
     };
 
     return (
-        <section className="min-h-screen flex items-center justify-center bg-slate-100 px-4 py-5">
-            <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
+        <section className="min-h-screen flex items-center justify-center px-4 py-5">
+            <div className="w-full max-w-md rounded-2xl bg-background border p-8 shadow-xl">
 
                 <div className="mb-5 text-center">
                     <Link
@@ -183,7 +183,7 @@ export default function RegisterPage() {
                     <button
                         type="button"
                         onClick={handleGoogleLogin}
-                        className="w-full rounded-lg border py-3 font-medium hover:bg-gray-100"
+                        className="w-full rounded-lg border py-3 font-medium bg-indigo-600 hover:bg-indigo-700 text-white"
                     >
                         Continue with Google
                     </button>
