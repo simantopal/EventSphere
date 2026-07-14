@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -67,6 +68,18 @@ export default function LoginPage() {
       alert("Demo login failed!");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      await signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Google login failed!");
     }
   };
 
@@ -147,6 +160,15 @@ export default function LoginPage() {
             className="w-full rounded-lg border border-indigo-600 py-3 font-semibold text-indigo-600 transition hover:bg-indigo-50 disabled:opacity-60"
           >
             Demo Login
+          </button>
+
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="flex w-full items-center justify-center gap-3 rounded-lg bg-violet-600 py-3 font-medium transition hover:bg-violet-700"
+          >
+            <FcGoogle className="text-xl" />
+            <span>Continue with Google</span>
           </button>
         </form>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn, signUp } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -183,9 +184,10 @@ export default function RegisterPage() {
                     <button
                         type="button"
                         onClick={handleGoogleLogin}
-                        className="w-full rounded-lg border py-3 font-medium bg-indigo-600 hover:bg-indigo-700 text-white"
+                        className="flex w-full items-center justify-center gap-3 rounded-lg bg-violet-600 py-3 font-medium transition hover:bg-violet-700"
                     >
-                        Continue with Google
+                        <FcGoogle className="text-xl" />
+                        <span>Continue with Google</span>
                     </button>
                 </form>
 

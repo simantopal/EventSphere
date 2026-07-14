@@ -31,11 +31,16 @@ export default function Filter({
           className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none transition focus:border-blue-500 bg-background"
         >
           <option value="">All Categories</option>
-          <option value="Music">Music</option>
-          <option value="Technology">Technology</option>
-          <option value="Business">Business</option>
+          <option value="Conference">Conference</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Seminar">Seminar</option>
+          <option value="Concert">Concert</option>
           <option value="Sports">Sports</option>
+          <option value="Technology">Technology</option>
+          <option value="Business" >Business</option>
           <option value="Education">Education</option>
+          <option value="Networking">Networking</option>
+          <option value="Festival">Festival</option>
         </select>
       </div>
 

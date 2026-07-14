@@ -2,7 +2,8 @@
 
 import EventGrid from "@/components/events/EventGrid";
 import Filter from "@/components/events/Filter";
-import { useEffect, useState } from "react";
+import Pagination from "@/components/events/Pagination";
+import { useEffect, useMemo, useState } from "react";
 
 interface Event {
   _id: string;
@@ -13,8 +14,11 @@ interface Event {
   location: string;
   date: string;
   price: number;
+  totalSeats: number;
   rating?: number;
 }
+
+const ITEMS_PER_PAGE = 8;
 
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -23,6 +27,8 @@ export default function EventsPage() {
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
   const [sort, setSort] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -46,10 +52,64 @@ export default function EventsPage() {
     fetchEvents();
   }, []);
 
+  // Filter + Sort
+  const filteredEvents = useMemo(() => {
+    let filtered = [...events];
+
+    if (category) {
+      filtered = filtered.filter(
+        (event) => event.category === category
+      );
+    }
+
+    if (location) {
+      filtered = filtered.filter(
+        (event) => event.location === location
+      );
+    }
+
+    if (sort === "price-low") {
+      filtered.sort((a, b) => a.price - b.price);
+    }
+
+    if (sort === "price-high") {
+      filtered.sort((a, b) => b.price - a.price);
+    }
+
+    if (sort === "latest") {
+      filtered.sort(
+        (a, b) =>
+          new Date(b.date).getTime() -
+          new Date(a.date).getTime()
+      );
+    }
+
+    return filtered;
+  }, [events, category, location, sort]);
+
+  // Pagination
+  const totalPages = Math.ceil(
+    filteredEvents.length / ITEMS_PER_PAGE
+  );
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const currentEvents = filteredEvents.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+
+  // Reset page when filter changes
+  // useEffect(() => {
+  //   setCurrentPage(1);
+  // }, [category, location, sort]);
+
   if (loading) {
     return (
-      <section className="min-h-screen flex items-center justify-center">
-        <h2 className="text-xl font-semibold">Loading events...</h2>
+      <section className="flex min-h-screen items-center justify-center">
+        <h2 className="text-xl font-semibold">
+          Loading events...
+        </h2>
       </section>
     );
   }
@@ -64,8 +124,8 @@ export default function EventsPage() {
           </h1>
 
           <p className="mx-auto mt-3 max-w-2xl text-gray-400">
-            Discover exciting events happening around you. Search, filter,
-            and find the perfect event to attend.
+            Discover exciting events happening around you.
+            Search, filter and find the perfect event.
           </p>
         </div>
 
@@ -75,28 +135,50 @@ export default function EventsPage() {
             category={category}
             location={location}
             sort={sort}
-            onCategoryChange={setCategory}
-            onLocationChange={setLocation}
-            onSortChange={setSort}
+            onCategoryChange={(value) => {
+              setCategory(value);
+              setCurrentPage(1);
+            }}
+            onLocationChange={(value) => {
+              setLocation(value);
+              setCurrentPage(1);
+            }}
+            onSortChange={(value) => {
+              setSort(value);
+              setCurrentPage(1);
+            }}
           />
         </div>
 
         {/* Events */}
-        {events.length > 0 ? (
-          <EventGrid events={events} />
+        {currentEvents.length > 0 ? (
+          <>
+            <EventGrid events={currentEvents} />
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => {
+                setCurrentPage(page);
+
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
+            />
+          </>
         ) : (
           <div className="py-20 text-center">
             <h2 className="text-2xl font-semibold">
               No Events Found
             </h2>
+
             <p className="mt-2 text-gray-500">
-              There are no events available right now.
+              There are no events matching your filters.
             </p>
           </div>
         )}
-
-        {/* Pagination */}
-        {/* <Pagination /> */}
       </div>
     </section>
   );
