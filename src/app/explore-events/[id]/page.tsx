@@ -68,23 +68,23 @@ const EventDetailsPage = async ({ params }: PageProps) => {
                     <div className="mt-6 space-y-4">
                         <div className="flex items-center gap-3">
                             <CalendarDays size={20} />
-                            <span>{event.date}</span>
+                            <span>Date: {event.date}</span>
                         </div>
 
                         <div className="flex items-center gap-3">
                             <Clock size={20} />
-                            <span>{event.time}</span>
+                            <span>Time: {event.time}</span>
                         </div>
 
                         <div className="flex items-center gap-3">
                             <MapPin size={20} />
-                            <span>{event.location}</span>
+                            <span>Location: {event.location}</span>
                         </div>
 
                         <div className="flex items-center gap-3">
                             <Ticket size={20} />
                             <span className="font-semibold text-indigo-600">
-                                ${event.price}
+                                Price: ${event.price}
                             </span>
                         </div>
 
@@ -93,7 +93,7 @@ const EventDetailsPage = async ({ params }: PageProps) => {
                                 size={18}
                                 className="fill-yellow-400 text-yellow-400"
                             />
-                            <span>{event.rating}</span>
+                            <span>Rating{event.rating}</span>
                         </div>
                     </div>
 
@@ -101,14 +101,30 @@ const EventDetailsPage = async ({ params }: PageProps) => {
                 </div>
             </div>
 
-            {/* Description */}
+            {/* About This Event */}
             <section className="mt-16">
-                <h2 className="text-3xl font-bold">About This Event</h2>
+                <div className="rounded-3xl border border-gray-200 bg-background p-8 shadow-sm">
+                    <div className="mb-6 flex items-center gap-3">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
+                            <Ticket className="h-6 w-6 text-indigo-600" />
+                        </div>
 
-                <p className="mt-5 leading-8 text-gray-600">
-                    {event.fullDescription}
-                </p>
+                        <div>
+                            <h2 className="text-3xl font-bold text-violet-600">
+                                About This Event
+                            </h2>
+                            <p className="text-sm text-gray-400">
+                                Learn more about this event before booking your ticket.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="space-y-5 text-justify leading-8">
+                        <p>{event.fullDescription}</p>
+                    </div>
+                </div>
             </section>
+
         </section>
     );
 };

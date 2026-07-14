@@ -8,6 +8,9 @@ interface Props {
     event: {
         _id: string;
         title: string;
+        image: string;
+        location: string;
+        date: string;
         price: number;
     };
 }
@@ -39,8 +42,12 @@ const BookTicketModal = ({ event }: Props) => {
 
         const bookingData = {
             eventId: event._id,
-            eventName: event.title,
+            eventTitle: event.title,
+            eventImage: event.image,
+            location: event.location,
+            date: event.date,
             price: event.price,
+            status: "Pending",
 
             name: user?.name,
             email: user?.email,

@@ -24,14 +24,14 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
             <Link
-              href="/events"
+              href="/explore-events"
               className="rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700"
             >
               Explore Events
             </Link>
 
             <Link
-              href="/events/add"
+              href="/events/add-events"
               className="rounded-xl border border-indigo-600 px-6 py-3 font-semibold text-indigo-600 transition hover:bg-indigo-50"
             >
               Host an Event
