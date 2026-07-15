@@ -55,8 +55,6 @@ export default function Statistics() {
     <section className="py-20 bg-base-100">
       <div className="max-w-7xl mx-auto px-4">
 
-        {/* Heading */}
-
         <div className="text-center max-w-2xl mx-auto mb-12">
           <h2 className="text-4xl font-bold">
             Our Impact in Numbers
@@ -69,7 +67,6 @@ export default function Statistics() {
           </p>
         </div>
 
-        {/* Stats */}
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
 
@@ -97,7 +94,6 @@ export default function Statistics() {
           })}
         </div>
 
-        {/* Chart */}
 
         <div className="rounded-2xl border border-base-300 bg-base-200 p-6 h-[380px]">
 

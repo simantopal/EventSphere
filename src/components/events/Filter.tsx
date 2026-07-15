@@ -19,7 +19,6 @@ export default function Filter({
 }: FilterProps) {
   return (
     <div className="grid gap-4 md:grid-cols-3">
-      {/* Category Filter */}
       <div>
         <label className="mb-2 block text-sm font-medium">
           Category
@@ -44,7 +43,6 @@ export default function Filter({
         </select>
       </div>
 
-      {/* Location Filter */}
       <div>
         <label className="mb-2 block text-sm font-medium">
           Location
@@ -64,7 +62,6 @@ export default function Filter({
         </select>
       </div>
 
-      {/* Sort */}
       <div>
         <label className="mb-2 block text-sm font-medium">
           Sort By

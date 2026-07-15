@@ -6,12 +6,12 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { signOut, useSession } from "@/lib/auth-client";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Change to your auth state later
   const { data: session, isPending } = useSession();
   if (isPending) {
     return null;
@@ -29,7 +29,6 @@ export default function Navbar() {
     { name: "Add Event", href: "/events/add-events" },
     { name: "Manage Events", href: "/events/manage" },
     { name: "My Bookings", href: "/my-bookings" },
-    // { name: "Profile", href: "/profile" },
   ];
 
   const links = isLoggedIn
@@ -39,7 +38,6 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-background shadow-sm">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        {/* Logo */}
         <Link
           href="/"
           className="text-2xl font-bold text-indigo-600"
@@ -47,7 +45,6 @@ export default function Navbar() {
           EventSphere
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
             <Link
@@ -63,14 +60,15 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right Side */}
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
           {isLoggedIn ? (
             <>
-              <img
-                src={session?.user.image || "https://i.pravatar.cc/40"}
+              <Image
+                src={session?.user.image || "/avatar.png"}
                 alt="User"
+                width={900}
+                height={700}
                 className="h-10 w-10 rounded-full"
               />
 
@@ -102,7 +100,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden"
@@ -111,7 +108,6 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="space-y-4 border-t bg-background px-6 py-5 md:hidden text-center">
           {links.map((link) => (

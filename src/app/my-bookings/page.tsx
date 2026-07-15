@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 import { Button, Chip, Table } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Booking {
     _id: string;
@@ -142,9 +143,11 @@ const MyBookingPage = () => {
                                     <Table.Row key={booking._id}>
                                         <Table.Cell>
                                             <div className="flex items-center gap-3">
-                                                <img
+                                                <Image
                                                     src={booking.eventImage}
                                                     alt={booking.eventTitle}
+                                                    width={500}
+                                                    height={500}
                                                     className="h-14 w-14 rounded-lg object-cover"
                                                 />
 

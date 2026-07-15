@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function AboutPage() {
   const features = [
     {
@@ -82,10 +84,12 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=1000"
             alt="Event"
-            className="h-[420px] w-full rounded-2xl object-cover shadow-lg"
+            width={700}
+            height={500}
+            className="h-105 w-full rounded-2xl object-cover shadow-lg"
           />
         </div>
       </section>
@@ -178,9 +182,11 @@ export default function AboutPage() {
               key={member.name}
               className="overflow-hidden rounded-2xl border bg-white shadow"
             >
-              <img
+              <Image
                 src={member.image}
                 alt={member.name}
+                width={700}
+                height={500}
                 className="h-80 w-full object-cover"
               />
 

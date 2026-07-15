@@ -41,7 +41,7 @@ export default function Categories() {
   return (
     <section className="py-20 bg-base-100">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Section Header */}
+        
         <div className="text-center mb-12">
           <p className="text-primary font-semibold uppercase tracking-wider">
             Categories
@@ -57,7 +57,6 @@ export default function Categories() {
           </p>
         </div>
 
-        {/* Categories Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <div

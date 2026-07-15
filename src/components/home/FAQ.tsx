@@ -41,7 +41,7 @@ export default function FAQ() {
   return (
     <section className="py-20">
       <div className="max-w-4xl mx-auto px-4">
-        {/* Section Heading */}
+       
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold">
             Frequently Asked Questions
@@ -51,7 +51,6 @@ export default function FAQ() {
           </p>
         </div>
 
-        {/* FAQ Items */}
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div

@@ -33,7 +33,6 @@ const EventCard = ({ event }: EventCardProps) => {
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-background shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      {/* Event Image */}
       <div className="relative h-56 w-full">
         <Image
           src={image}
@@ -43,7 +42,6 @@ const EventCard = ({ event }: EventCardProps) => {
         />
       </div>
 
-      {/* Card Content */}
       <div className="flex flex-1 flex-col p-5">
         <h3 className="line-clamp-1 text-xl font-bold">{title}</h3>
 

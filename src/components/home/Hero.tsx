@@ -57,7 +57,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right */}
         <div className="relative w-full max-w-xl">
           <div className="absolute -left-8 top-10 h-32 w-32 rounded-full bg-indigo-200 blur-3xl"></div>
 

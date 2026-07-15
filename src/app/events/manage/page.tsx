@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Event {
     _id: string;
@@ -124,9 +125,11 @@ const ManageEventsPage = () => {
                                 key={event._id}
                                 className="overflow-hidden rounded-2xl border bg-background shadow-sm transition hover:shadow-lg"
                             >
-                                <img
+                                <Image
                                     src={event.image}
                                     alt={event.title}
+                                    width={900}
+                                    height={900}
                                     className="h-52 w-full object-cover"
                                 />
 

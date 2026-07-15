@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Testimonial = {
   id: number;
   name: string;
@@ -78,9 +80,11 @@ const Testimonials = () => {
 
               {/* User */}
               <div className="flex items-center gap-4">
-                <img
+                <Image
                   src={testimonial.image}
                   alt={testimonial.name}
+                  width={900}
+                  height={700}
                   className="w-14 h-14 rounded-full object-cover"
                 />
 

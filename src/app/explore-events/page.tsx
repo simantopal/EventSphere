@@ -52,7 +52,6 @@ export default function EventsPage() {
     fetchEvents();
   }, []);
 
-  // Filter + Sort
   const filteredEvents = useMemo(() => {
     let filtered = [...events];
 
@@ -87,7 +86,6 @@ export default function EventsPage() {
     return filtered;
   }, [events, category, location, sort]);
 
-  // Pagination
   const totalPages = Math.ceil(
     filteredEvents.length / ITEMS_PER_PAGE
   );
@@ -98,11 +96,6 @@ export default function EventsPage() {
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
-
-  // Reset page when filter changes
-  // useEffect(() => {
-  //   setCurrentPage(1);
-  // }, [category, location, sort]);
 
   if (loading) {
     return (
@@ -117,7 +110,6 @@ export default function EventsPage() {
   return (
     <section className="min-h-screen bg-background py-10">
       <div className="mx-auto max-w-7xl px-4">
-        {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold">
             Explore Events
@@ -129,7 +121,6 @@ export default function EventsPage() {
           </p>
         </div>
 
-        {/* Filter */}
         <div className="mb-8">
           <Filter
             category={category}
@@ -150,7 +141,6 @@ export default function EventsPage() {
           />
         </div>
 
-        {/* Events */}
         {currentEvents.length > 0 ? (
           <>
             <EventGrid events={currentEvents} />
