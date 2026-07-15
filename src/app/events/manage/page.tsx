@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface Event {
     _id: string;
@@ -15,12 +16,18 @@ interface Event {
 }
 
 const ManageEventsPage = () => {
+    const router = useRouter();
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
 
     const { data: session, isPending } = authClient.useSession();
 
     useEffect(() => {
+        if (!isPending && !session) {
+            router.replace("/auth/login");
+            return;
+        }
+
         if (!session?.user?.email) return;
 
         const fetchEvents = async () => {
@@ -42,7 +49,7 @@ const ManageEventsPage = () => {
         };
 
         fetchEvents();
-    }, [session]);
+    }, [session, isPending, router]);
 
     const handleDelete = async (id: string) => {
         const confirmDelete = confirm("Are you sure?");
@@ -74,6 +81,7 @@ const ManageEventsPage = () => {
             </div>
         );
     }
+    if (!session) return null;
 
     return (
         <section className="min-h-screen bg-background py-10">

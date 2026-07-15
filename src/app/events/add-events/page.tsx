@@ -1,10 +1,19 @@
 "use client"
 import { authClient } from "@/lib/auth-client";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const AddEventPage = () => {
+    const router = useRouter();
     const { data: session, isPending } = authClient.useSession();
     const user = session?.user;
+
+
+    useEffect(() => {
+        if (!isPending && !session) {
+            router.replace("/auth/login");
+        }
+    }, [session, isPending, router]);
 
     if (isPending) {
         return (
@@ -13,6 +22,7 @@ const AddEventPage = () => {
             </div>
         );
     }
+    if (!session) return null;
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -103,10 +113,10 @@ const AddEventPage = () => {
                                     Category
                                 </label>
 
-                                <select 
-                                name="category"
-                                required
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600 bg-background">
+                                <select
+                                    name="category"
+                                    required
+                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600 bg-background">
                                     <option>Select Category</option>
                                     <option>Conference</option>
                                     <option>Workshop</option>
@@ -131,8 +141,8 @@ const AddEventPage = () => {
                                 </label>
 
                                 <input
-                                required
-                                name="date"
+                                    required
+                                    name="date"
                                     type="date"
                                     className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
                                 />
@@ -145,7 +155,7 @@ const AddEventPage = () => {
                                 </label>
 
                                 <input
-                                required
+                                    required
                                     type="time"
                                     name="time"
                                     className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
@@ -162,8 +172,8 @@ const AddEventPage = () => {
                                 </label>
 
                                 <input
-                                required
-                                name="location"
+                                    required
+                                    name="location"
                                     type="text"
                                     placeholder="Enter location"
                                     className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
@@ -177,8 +187,8 @@ const AddEventPage = () => {
                                 </label>
 
                                 <input
-                                name="price"
-                                required
+                                    name="price"
+                                    required
                                     type="number"
                                     placeholder="Enter price"
                                     className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
@@ -195,8 +205,8 @@ const AddEventPage = () => {
                                 </label>
 
                                 <input
-                                required
-                                name="totalSeats"
+                                    required
+                                    name="totalSeats"
                                     type="number"
                                     placeholder="Enter total seats"
                                     className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
@@ -210,8 +220,8 @@ const AddEventPage = () => {
                                 </label>
 
                                 <input
-                                required
-                                name="image"
+                                    required
+                                    name="image"
                                     type="url"
                                     placeholder="https://example.com/image.jpg"
                                     className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
@@ -226,7 +236,7 @@ const AddEventPage = () => {
                             </label>
 
                             <textarea
-                            name="shortDescription"
+                                name="shortDescription"
                                 rows={3}
                                 placeholder="Write a short description..."
                                 className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
@@ -240,7 +250,7 @@ const AddEventPage = () => {
                             </label>
 
                             <textarea
-                            name="fullDescription"
+                                name="fullDescription"
                                 rows={6}
                                 placeholder="Write the complete event details..."
                                 className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"

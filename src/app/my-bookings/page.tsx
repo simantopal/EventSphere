@@ -3,15 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
-import {
-    Avatar,
-    Button,
-    Card,
-    CardBody,
-    CardHeader,
-    Chip,
-    Table,
-} from "@heroui/react";
+import { Button, Chip, Table } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 interface Booking {
     _id: string;
@@ -27,6 +20,7 @@ interface Booking {
 }
 
 const MyBookingPage = () => {
+    const router = useRouter();
     const { data: session, isPending } = useSession();
 
     const userEmail = session?.user?.email;
@@ -35,6 +29,10 @@ const MyBookingPage = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        if (!isPending && !session) {
+            router.replace("/auth/login");
+            return;
+        }
         if (isPending || !userEmail) return;
 
         const fetchBookings = async () => {
@@ -64,7 +62,7 @@ const MyBookingPage = () => {
         };
 
         fetchBookings();
-    }, [userEmail, isPending]);
+    }, [session, userEmail, isPending, router]);
 
     const handleDelete = async (id: string) => {
         const confirmDelete = window.confirm(
@@ -98,6 +96,7 @@ const MyBookingPage = () => {
             </section>
         );
     }
+    if (!session) return null;
 
     return (
         <section className="container mx-auto px-4 py-10">
@@ -190,7 +189,7 @@ const MyBookingPage = () => {
                                                 </Link>
 
                                                 <Button
-                                                    size="sm"     
+                                                    size="sm"
                                                     variant="danger"
                                                     className="bg-red-500"
                                                     onPress={() => handleDelete(booking._id)}
