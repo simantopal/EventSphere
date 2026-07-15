@@ -29,6 +29,22 @@ const AddEventPage = () => {
 
         const form = e.currentTarget;
         const formData = new FormData(form);
+        const imageFile = formData.get("image") as File;
+
+        const imageFormData = new FormData();
+        imageFormData.append("image", imageFile);
+
+        const uploadRes = await fetch(
+            `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+            {
+                method: "POST",
+                body: imageFormData,
+            }
+        );
+
+        const uploadResult = await uploadRes.json();
+
+        const imageUrl = uploadResult.data.display_url;
 
         const eventData = {
             title: formData.get("title"),
@@ -40,7 +56,7 @@ const AddEventPage = () => {
             location: formData.get("location"),
             price: Number(formData.get("price")),
             totalSeats: Number(formData.get("totalSeats")),
-            image: formData.get("image"),
+            image: imageUrl,
             createdBy: {
                 id: user?.id,
                 name: user?.name,
@@ -49,6 +65,8 @@ const AddEventPage = () => {
 
             createdAt: new Date().toISOString(),
         };
+
+
 
         try {
             const res = await fetch(
@@ -216,15 +234,14 @@ const AddEventPage = () => {
                             {/* Image */}
                             <div>
                                 <label className="mb-2 block font-medium">
-                                    Image URL (Optional)
+                                    Event Image
                                 </label>
 
                                 <input
-                                    required
+                                    type="file"
+                                    accept="image/*"
                                     name="image"
-                                    type="url"
-                                    placeholder="https://example.com/image.jpg"
-                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+                                    className="w-full rounded-lg border border-gray-300 px-4 py-3"
                                 />
                             </div>
                         </div>
