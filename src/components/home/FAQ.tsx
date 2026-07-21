@@ -5,29 +5,34 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    question: "How do I book an event?",
+    question: "What is Orvanta?",
     answer:
-      "Browse events, open the event details page, and click the Book Now button. Complete the booking form to reserve your seat.",
+      "Orvanta is an AI-powered shopping platform that helps you discover relevant products, compare options, and make smarter purchasing decisions with intelligent recommendations.",
   },
   {
-    question: "Do I need an account to book tickets?",
+    question: "How does the AI Shopping Assistant work?",
     answer:
-      "Yes. You need to create an account and log in before booking any event to securely manage your bookings.",
+      "Simply tell the AI assistant what you are looking for, your preferences, and your budget. It analyzes your needs and helps you discover products that best match your requirements.",
   },
   {
-    question: "Can I add my own events?",
+    question: "Do I need an account to use Orvanta?",
     answer:
-      "Yes. Logged-in users can add and manage their own events from the dashboard.",
+      "You can explore products without an account. However, creating an account allows you to receive personalized recommendations, save preferences, manage orders, and access your shopping history.",
   },
   {
-    question: "How can I cancel a booking?",
+    question: "How does Orvanta personalize product recommendations?",
     answer:
-      "You can manage your bookings from the My Bookings page. Cancellation availability depends on the event organizer's policy.",
+      "Orvanta analyzes your preferences, product interactions, categories of interest, and shopping behavior to provide more relevant recommendations over time.",
   },
   {
-    question: "Is my payment information secure?",
+    question: "Can I add and manage products?",
     answer:
-      "Yes. EventSphere follows secure authentication and encrypted communication to help protect your personal information.",
+      "Yes. Authorized users can add products and manage their product listings through the product management dashboard.",
+  },
+  {
+    question: "Is my personal information secure?",
+    answer:
+      "Yes. Orvanta is designed with secure authentication and protected API communication to help keep your account and personal information safe.",
   },
 ];
 
@@ -40,33 +45,35 @@ export default function FAQ() {
 
   return (
     <section className="py-20">
-      <div className="max-w-4xl mx-auto px-4">
-       
-        <div className="text-center mb-12">
+      <div className="mx-auto max-w-4xl px-4">
+        {/* Header */}
+        <div className="mb-12 text-center">
           <h2 className="text-4xl font-bold">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4">
-            Find answers to the most common questions about EventSphere.
+
+          <p className="mt-4 text-base-content/70">
+            Find answers to common questions about shopping with Orvanta.
           </p>
         </div>
 
+        {/* FAQ List */}
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div
-              key={index}
-              className="border border-gray-200 bg-background rounded-xl shadow-sm"
+              key={faq.question}
+              className="rounded-xl border border-gray-200 bg-background shadow-sm"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex items-center justify-between px-6 py-5 text-left"
+                className="flex w-full items-center justify-between px-6 py-5 text-left"
               >
-                <span className="font-semibold text-lg">
+                <span className="text-lg font-semibold">
                   {faq.question}
                 </span>
 
                 <ChevronDown
-                  className={`h-5 w-5 transition-transform duration-300 ${
+                  className={`h-5 w-5 shrink-0 transition-transform duration-300 ${
                     openIndex === index ? "rotate-180" : ""
                   }`}
                 />
@@ -75,11 +82,13 @@ export default function FAQ() {
               <div
                 className={`overflow-hidden transition-all duration-300 ${
                   openIndex === index
-                    ? "max-h-40 px-6 pb-5"
+                    ? "max-h-60 px-6 pb-5"
                     : "max-h-0 px-6"
                 }`}
               >
-                <p className="text-gray-300 leading-7">{faq.answer}</p>
+                <p className="leading-7 text-base-content/70">
+                  {faq.answer}
+                </p>
               </div>
             </div>
           ))}

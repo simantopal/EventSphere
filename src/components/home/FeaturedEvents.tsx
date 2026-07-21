@@ -1,37 +1,36 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import EventCard from "../events/EventCard";
+import ProductCard from "../shop/ProductCard";
 
-interface Event {
+interface Product {
   _id: string;
   title: string;
   shortDescription: string;
   image: string;
   category: string;
-  location: string;
-  date: string;
   price: number;
-  totalSeats: number;
+  stock: number;
   rating?: number;
+  discount?: number;
 }
 
-const FeaturedEvents = () => {
-  const [events, setEvents] = useState<Event[]>([]);
+const FeaturedProducts = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFeaturedEvents = async () => {
+    const fetchFeaturedProducts = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/events`
+          `${process.env.NEXT_PUBLIC_API_URL}/products`
         );
 
         const data = await res.json();
 
         if (data.success) {
-          // Show only latest 8 events
-          setEvents(data.data.slice(0, 8));
+          // Show only latest 8 products
+          setProducts(data.data.slice(0, 8));
         }
       } catch (error) {
         console.error(error);
@@ -40,14 +39,14 @@ const FeaturedEvents = () => {
       }
     };
 
-    fetchFeaturedEvents();
+    fetchFeaturedProducts();
   }, []);
 
   if (loading) {
     return (
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 text-center">
-          <p>Loading events...</p>
+          <p>Loading products...</p>
         </div>
       </section>
     );
@@ -56,33 +55,37 @@ const FeaturedEvents = () => {
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-4">
+
         {/* Heading */}
         <div className="mb-10 text-center">
           <p className="font-semibold uppercase tracking-wider text-primary">
-            Featured Events
+            Featured Products
           </p>
 
           <h2 className="mt-2 text-4xl font-bold">
-            Discover Upcoming Experiences
+            Discover Products You&apos;ll Love
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-gray-500">
-            Explore handpicked events designed to inspire learning,
-            networking, creativity, and unforgettable experiences.
+            Explore carefully selected products from trusted sellers,
+            designed to make your everyday life better.
           </p>
         </div>
 
-        {/* Events */}
-        {events.length > 0 ? (
+        {/* Products */}
+        {products.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {events.map((event) => (
-              <EventCard key={event._id} event={event} />
+            {products.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+              />
             ))}
           </div>
         ) : (
           <div className="py-10 text-center">
             <h3 className="text-xl font-semibold">
-              No Events Available
+              No Products Available
             </h3>
           </div>
         )}
@@ -91,4 +94,4 @@ const FeaturedEvents = () => {
   );
 };
 
-export default FeaturedEvents;
+export default FeaturedProducts;

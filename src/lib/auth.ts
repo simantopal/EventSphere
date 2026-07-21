@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
 const client = new MongoClient(process.env.MONGO_DB_URI!);
-const db = client.db("EventSphere");
+const db = client.db("Orvanta");
 
 export const auth = betterAuth({
     emailAndPassword: { 

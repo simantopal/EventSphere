@@ -46,30 +46,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleDemoLogin = async () => {
-    setLoading(true);
-
-    try {
-      const { error } = await signIn.email({
-        email: "user@123.com",
-        password: "user@123",
-        callbackURL: "/",
-      });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      router.push("/");
-      router.refresh();
-    } catch (err) {
-      console.error(err);
-      alert("Demo login failed!");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleGoogleLogin = async () => {
     try {
@@ -151,15 +127,6 @@ export default function LoginPage() {
             className="w-full rounded-lg bg-indigo-600 py-3 font-semibold text-white transition hover:bg-indigo-700 disabled:opacity-60"
           >
             {loading ? "Logging in..." : "Login"}
-          </button>
-
-          <button
-            type="button"
-            onClick={handleDemoLogin}
-            disabled={loading}
-            className="w-full rounded-lg border border-indigo-600 py-3 font-semibold text-indigo-600 transition hover:bg-indigo-50 disabled:opacity-60"
-          >
-            Demo Login
           </button>
 
           <button

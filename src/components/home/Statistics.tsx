@@ -2,10 +2,11 @@
 
 import {
   BarChart3,
-  CalendarDays,
-  MapPin,
-  Ticket,
+  BrainCircuit,
+  Package,
+  ShoppingCart,
 } from "lucide-react";
+
 import {
   ResponsiveContainer,
   AreaChart,
@@ -17,69 +18,71 @@ import {
 const stats = [
   {
     id: 1,
-    title: "Total Events",
-    value: "250+",
-    icon: CalendarDays,
+    title: "Products Available",
+    value: "10K+",
+    icon: Package,
   },
   {
     id: 2,
-    title: "Tickets Sold",
-    value: "12K+",
-    icon: Ticket,
+    title: "AI Recommendations",
+    value: "25K+",
+    icon: BrainCircuit,
   },
   {
     id: 3,
-    title: "Cities Covered",
-    value: "35+",
-    icon: MapPin,
+    title: "Happy Shoppers",
+    value: "8K+",
+    icon: ShoppingCart,
   },
   {
     id: 4,
-    title: "Monthly Bookings",
-    value: "4.8K",
+    title: "Monthly Interactions",
+    value: "18K+",
     icon: BarChart3,
   },
 ];
 
 const chartData = [
-  { month: "Jan", bookings: 420 },
-  { month: "Feb", bookings: 610 },
-  { month: "Mar", bookings: 780 },
-  { month: "Apr", bookings: 950 },
-  { month: "May", bookings: 1100 },
-  { month: "Jun", bookings: 1380 },
+  { month: "Jan", interactions: 520 },
+  { month: "Feb", interactions: 760 },
+  { month: "Mar", interactions: 980 },
+  { month: "Apr", interactions: 1250 },
+  { month: "May", interactions: 1580 },
+  { month: "Jun", interactions: 1920 },
 ];
 
 export default function Statistics() {
   return (
-    <section className="py-20 bg-base-100">
-      <div className="max-w-7xl mx-auto px-4">
-
-        <div className="text-center max-w-2xl mx-auto mb-12">
+    <section className="bg-base-100 py-20">
+      <div className="mx-auto max-w-7xl px-4">
+        {/* Header */}
+        <div className="mx-auto mb-12 max-w-2xl text-center">
           <h2 className="text-4xl font-bold">
-            Our Impact in Numbers
+            Smarter Shopping, Measurable Impact
           </h2>
 
           <p className="mt-4 text-base-content/70">
-            Thousands of users trust EventSphere to discover,
-            manage, and book unforgettable events across the
-            country.
+            Thousands of shoppers use Orvanta to discover relevant products,
+            explore intelligent recommendations, and make more confident
+            purchasing decisions.
           </p>
         </div>
 
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-
+        {/* Stats Cards */}
+        <div className="mb-16 grid grid-cols-2 gap-6 lg:grid-cols-4">
           {stats.map((item) => {
             const Icon = item.icon;
 
             return (
               <div
                 key={item.id}
-                className="rounded-2xl border border-base-300 bg-background p-6 text-center hover:shadow-lg transition"
+                className="rounded-2xl border border-base-300 bg-background p-6 text-center transition hover:shadow-lg"
               >
-                <div className="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4">
-                  <Icon className="text-primary" size={28} />
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-indigo-500/20">
+                  <Icon
+                    className="text-primary"
+                    size={28}
+                  />
                 </div>
 
                 <h3 className="text-3xl font-bold">
@@ -94,28 +97,27 @@ export default function Statistics() {
           })}
         </div>
 
-
-        <div className="rounded-2xl border border-base-300 bg-base-200 p-6 h-[380px]">
-
-          <h3 className="text-xl font-semibold mb-6">
-            Monthly Event Bookings
+        {/* Chart */}
+        <div className="h-[380px] rounded-2xl border border-base-300 bg-base-200 p-6">
+          <h3 className="mb-6 text-xl font-semibold">
+            Monthly AI Shopping Interactions
           </h3>
 
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
               <XAxis dataKey="month" />
+
               <Tooltip />
 
               <Area
                 type="monotone"
-                dataKey="bookings"
+                dataKey="interactions"
                 stroke="#2563eb"
                 fill="#93c5fd"
               />
             </AreaChart>
           </ResponsiveContainer>
         </div>
-
       </div>
     </section>
   );
